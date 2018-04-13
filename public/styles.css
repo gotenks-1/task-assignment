@@ -1,0 +1,62 @@
+.switch label input[type=checkbox]:checked+.lever {
+    background-color: #616161;
+  }
+  
+  .switch label input[type=checkbox]:checked+.lever:after {
+    background-color: #424242;
+  }
+
+  .input-field{
+    /* background-color: blueviolet; */
+  }
+
+  .input-field>label{
+    /* color: blueviolet; */
+  }
+
+  .input-field>input{
+    /* border-bottom-color: blueviolet; */
+  }
+
+  input[type=text]:not(.browser-default):focus:not([readonly]){
+    border-bottom-color: #616161 ;
+  }
+
+  input[type=password]:not(.browser-default):focus:not([readonly]){
+    border-bottom-color: #424242 ;
+  }
+
+  textarea:not(.browser-default):focus:not([readonly]){
+    border-bottom-color: #424242 ;
+  }
+
+  .btn{
+    background-color: #424242 ;
+  }
+
+  .btn:hover{
+    background-color: #757575  ;
+  }
+
+  .btn:focus{
+    background-color: #424242 ;
+  }
+
+  a{
+      color: #424242  ;
+  }
+
+  body{
+      
+  }
+
+  .row{
+    margin-left: 0px!important;
+    margin-right: 0px!important;
+  }
+
+  .centered-preloader{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+  }
