@@ -11,11 +11,11 @@ export default class ControlListComponent extends Component{
         return(
             <div>
                 <ul className="header">
-                    <li><Link to="/Threads/open">Open thread</Link></li>
-                    <li><Link to="/Threads/closed">Closed thread</Link></li>
-                    <li><Link to="/Editor">Editor Component</Link></li>
-                    <li><Link to="/Threads">Threads</Link></li>
-                    <li><Link to="/Reply">Reply</Link></li>
+                    <li><Link to="/NewThread">Create New Thread</Link></li>
+                    <li><Link to="/Threads/status/open">Open threads</Link></li>
+                    <li><Link to="/Threads/status/closed">Closed threads</Link></li>
+                    <li><Link to="/Threads/user/current">My threads</Link></li>
+                    <li><Link to="/Threads">All Threads</Link></li>
                 </ul>
             </div>
         );

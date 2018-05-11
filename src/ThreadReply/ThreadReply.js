@@ -64,28 +64,28 @@ export default class ThreadReply extends Component{
         }
 
         return(
-            <div>
+            <div className="t-reply">
                 <div style={controllerHolderStyle}>
                     {
-                        !(this.state.flipAdmin&&this.props.reply.user.type==="admin")?
+                        !(this.state.flipAdmin&&this.props.reply.uId.type==="admin")?
                         (
                             <div className="row" style={{marginBottom:0+"px"}}>
                                 <div className="col s12 hide-on-large-only" style={imgHolderStyleFull}>
                                
                                 <div>
-                                    <img alt={this.props.reply.user.id} src={this.props.reply.user.dp} style={{width:50+"px"}} className="responsive-img"/><br/>
-                                    <span>{this.props.reply.user.id}</span>
+                                    <img alt={this.props.reply.uId._id} src={this.props.reply.uId.dp?this.props.reply.uId.dp:'/react.png'} style={{width:50+"px"}} className="responsive-img"/><br/>
+                                    <span>{this.props.reply.uId._id}</span>
                                 </div>
                                 </div>
                                 <div className="col s12 m1 hide-on-med-and-down" style={imgHolderStyle}>
                                 
                                 <center>
-                                    <img alt={this.props.reply.user.id} src={this.props.reply.user.dp} style={{width:50+"px"}} className="responsive-img"/><br/>
-                                    <span>{this.props.reply.user.id}</span>
+                                    <img alt={this.props.reply.uId._id} src={this.props.reply.uId.dp?this.props.reply.uId.dp:'/react.png'} style={{width:50+"px"}} className="responsive-img"/><br/>
+                                    <span>{this.props.reply.uId._id}</span>
                                 </center>
                                 </div>
                                 <div className="col s12 m12 l11" style={replyHolderStyle}>
-                                        <span>{this.props.isQues?"Posted : ":"Replied : "}{new Date(this.props.reply.time).toUTCString().split(' ').splice(1).join(" ")}</span><br/><br/>
+                                        <span>{this.props.isQues?"Posted : ":"Replied : "}{new Date(this.props.reply.createdAt).toUTCString().split(' ').splice(1).join(" ")}</span><br/><br/>
                                         <div dangerouslySetInnerHTML={{__html: this.props.reply.content}} />
                                    
                                 </div>
@@ -95,18 +95,18 @@ export default class ThreadReply extends Component{
                             <div className="row" style={{marginBottom:0+"px"}}>
                                 <div className="col s12 hide-on-large-only" style={imgHolderStyleFull}>
                                 <div className="right">
-                                    <img alt={this.props.reply.user.id} src={this.props.reply.user.dp} style={{width:50+"px"}} className="responsive-img"/><br/>
-                                    <span>{this.props.reply.user.id}</span>
+                                    <img alt={this.props.reply.uId._id} src={this.props.reply.uId.dp?this.props.reply.uId.dp:'/react.png'} style={{width:50+"px"}} className="responsive-img"/><br/>
+                                    <span>{this.props.reply.uId._id}</span>
                                 </div>
                                 </div>
                                 <div className="col s12 m12 l11" style={replyHolderStyle}>
-                                        <span>{this.props.isQues?"Posted : ":"Replied : "}{new Date(this.props.reply.time).toUTCString().split(' ').splice(1).join(" ")}</span><br/><br/>
+                                        <span>{this.props.isQues?"Posted : ":"Replied : "}{new Date(this.props.reply.createdAt).toUTCString().split(' ').splice(1).join(" ")}</span><br/><br/>
                                         <div dangerouslySetInnerHTML={{__html: this.props.reply.content}} />
                                 </div>
                                 <div className="col s12 m1 hide-on-med-and-down" style={imgHolderStyle}>
                                 <center>
-                                    <img alt={this.props.reply.user.id} src={this.props.reply.user.dp} style={{width:50+"px"}} className="responsive-img"/><br/>
-                                    <span>{this.props.reply.user.id}</span>
+                                    <img alt={this.props.reply.uId._id} src={this.props.reply.uId.dp?this.props.reply.uId.dp:'/react.png'} style={{width:50+"px"}} className="responsive-img"/><br/>
+                                    <span>{this.props.reply.uId._id}</span>
                                 </center>
                                 </div>
                             </div>

@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import ThreadReply from "../ThreadReply/ThreadReply";
 import DataSvc from "../dataSvc";
 import CircularLoader from "../CircularLoader";
+import EditorComponent from "../EditorComponent/EditorComponent";
+import "./ThreadViewerComponent.css";
 
 export default class ThreadViewerComponent extends Component{
     constructor(props){
         super(props);
-        console.log('line7 tview',props);
         this.state={
             resolved:false,
             tExist:true,
@@ -17,7 +18,7 @@ export default class ThreadViewerComponent extends Component{
             this.getThread(this.props.match.params.id);
         }else{
             this.props.history.push('/');
-            console.log();
+            console.log('else part');
         }
     }
 
@@ -36,7 +37,7 @@ export default class ThreadViewerComponent extends Component{
 
     getReplies(thread){
 
-        DataSvc.getRepliesByThreadId(thread.id).then(response=>{
+        DataSvc.getRepliesByThreadId(thread._id).then(response=>{
             if(response.status==="success"){
                 this.setState({
                     thread:thread,
@@ -51,16 +52,24 @@ export default class ThreadViewerComponent extends Component{
             }
         });
 
+    }
 
-        fetch('http://localhost:8000/replies?tid='+thread.id).then((response)=>{
-            return response.json();
-        }).then((data)=>{
-            this.setState({
-                thread:thread,
-                replies:data,
-                resolved:true
-            });
+    submitReply(textData,htmlData){
+        var rData={};
+        rData['user']=this.props.user._id;
+        rData['tId']=this.props.match.params.id;
+        rData['content']=htmlData;
+        console.log(JSON.stringify(rData));
+
+
+        DataSvc.postReply(rData).then(function(response) {
+            
+            if(response.success){
+                console.log('reply submitted');
+            }
         });
+        console.log('submiting html data \n',rData);
+        this.setState({});
     }
 
     render(){
@@ -79,6 +88,14 @@ export default class ThreadViewerComponent extends Component{
             );
         }
 
+        let editor=this.props.user?(
+            <EditorComponent onSubmit={this.submitReply.bind(this)} bText="Submit Reply"/>
+        ):(
+            <span>
+                Login to reply to this Thread...
+            </span>
+        );
+
         return(
             <div>
                 {
@@ -87,7 +104,7 @@ export default class ThreadViewerComponent extends Component{
                             <div className="" style={threadQuesHolder} >
                                 <div className="row" style={{paddingLeft:"10px"}}>
                                     <h4>{this.state.thread.subject}</h4>
-                                    <span>Posted by: {this.state.thread.user.id} on {new Date(this.state.thread.time).toUTCString().split(' ').splice(1).join(" ")}</span>
+                                    <span>Posted by: {this.state.thread.uId._id} on {new Date(this.state.thread.createdAt).toUTCString().split(' ').splice(1).join(" ")}</span>
                                 </div>
                                 <div className="row" style={{marginBottom:5+"px",paddingLeft:"10px"}}>
                                     <div dangerouslySetInnerHTML={{__html: this.state.thread.content}} />
@@ -95,9 +112,14 @@ export default class ThreadViewerComponent extends Component{
                             </div>
                             <div className="">
                                 {
-                                    this.state.replies.map((item)=>{
-                                        return <div  key={item.id} style={{marginBottom:5+"px"}}><ThreadReply reply={item} isQues={false}/></div>
+                                    this.state.replies.map((rply)=>{
+                                        return <div  key={rply._id} style={{marginBottom:5+"px"}}><ThreadReply reply={rply} isQues={false}/></div>
                                     })
+                                }
+                            </div>
+                            <div className="replyEditor">
+                                {
+                                    editor
                                 }
                             </div>
                         </div>

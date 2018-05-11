@@ -1,34 +1,52 @@
 import React, { Component } from "react";
-import './LoginComponent.css';
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+import './SignupComponent.css';
 
-export default class LoginComponent extends Component{
+export default class SignupComponent extends Component{
     constructor(props){
         super(props);
         this.state={
-           isLoginFailed:false,
+           isSignupFailed:false,
            errorMsg:"Wrong email or pass",
-           header:"Login"
+           header:"SignUp"
         }
         this.handleFormSubmit=this.formSubmit.bind(this);
         this.handleKeyDownSubmit=this.keyDownSubmit.bind(this);
     }
 
+    validEmail(email){
+        var regex=/^[\w][\w\.+-]*[\w]@[\w][\w-]*[\w](\.\w{2,}){1,3}$/i;
+        return regex.test(email);        
+    }
+
     formSubmit(e){
         var user={};
-        user.id=this.formLogin[0].value;
-        user.pass=this.formLogin[1].value;
-        user.isAdmin=this.formLogin[2].checked;
-        if(!user.id||!user.pass){
+        user.id=this.formSignup[0].value;
+        user.email=this.formSignup[1].value;
+        user.pass=this.formSignup[2].value;
+        user.cPass=this.formSignup[3].value;
+        if(!user.id||!user.pass||!user.pass||!user.cPass){
             this.setState({
-                isLoginFailed:true,
-                errorMsg:"Username and Password are required"
+                isSignupFailed:true,
+                errorMsg:"All fields are mandatory"
+            });
+            return;
+        }else if(!this.validEmail(user.email)){
+            this.setState({
+                isSignupFailed:true,
+                errorMsg:"Invalid Email"
+            });
+            return;
+        }else if(user.pass!==user.cPass){
+            this.setState({
+                isSignupFailed:true,
+                errorMsg:"Pass and confirm pass don't match"
             });
             return;
         }else{
             this.setState({
-                isLoginFailed:false,
-                errorMsg:""
+                isSignupFailed:false,
+                errorMsg:null
             });
         }
         var err;
@@ -37,7 +55,7 @@ export default class LoginComponent extends Component{
         }
         if(err){
             this.setState({
-                isLoginFailed:true,
+                isSignupFailed:true,
                 errorMsg:err
             });
         }
@@ -51,13 +69,13 @@ export default class LoginComponent extends Component{
 
 
     render(){
-        console.log('login props',this.props);
-        var isLoginFailed=this.props.loginFailed?this.props.loginFailed:this.state.isLoginFailed,
+        console.log('signup props',this.props);
+        var isSignupFailed=this.props.isSignupFailed?this.props.isSignupFailed:this.state.isSignupFailed,
             errorMsg=this.props.errorMsg?this.props.errorMsg:this.state.errorMsg,
             header=this.props.header?this.props.header:this.state.header;
         return(
             <div className="login-form">
-                <form ref={(el)=>this.formLogin=el} onKeyDown={this.handleKeyDownSubmit}>
+                <form ref={(el)=>this.formSignup=el} onKeyDown={this.handleKeyDownSubmit}>
                     <div className="row form-header">
                         <div className="center">
                             <h4>{header}</h4>
@@ -69,11 +87,19 @@ export default class LoginComponent extends Component{
                             <input type="text"/>
                         </div>
                         <div className="row form-entry input-field">
+                            <label>Email</label>
+                            <input type="text"/>
+                        </div>
+                        <div className="row form-entry input-field">
                             <label>Password</label>
                             <input type="password"/>
                         </div>
+                        <div className="row form-entry input-field">
+                            <label>Confirm pass</label>
+                            <input type="password"/>
+                        </div>
                         {
-                            (isLoginFailed)?
+                            (isSignupFailed)?
                             <div className="row">
                                 <div className="right red-text">{errorMsg}</div>
                             </div>:null
@@ -84,7 +110,7 @@ export default class LoginComponent extends Component{
                         </button>
                         </div>
                         <div className="row right">
-                            <Link to="/Signup"><span  style={{}}>Don't have an account? SignUp here</span></Link>
+                            <Link to="/Login"><span  style={{}}>Already have an account? Login here</span></Link>
                         </div>
                     </div>
                     
